@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 // asagidaki CrossOrigin frontendi baslattiktan sonra ürün bilgilerini görememe hatasi olan Common Pitfall icin.
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://localhost:3000")
 @RepositoryRestResource(collectionResourceRel = "productCategory", path = "product-category")
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
 }
