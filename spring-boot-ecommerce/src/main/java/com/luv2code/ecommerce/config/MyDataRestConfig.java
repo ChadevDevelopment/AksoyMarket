@@ -37,15 +37,22 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Country.class, config, theUnsupportedActions);
         disableHttpMethods(State.class, config, theUnsupportedActions);
 
+        // Enable CORS for all origins (you can restrict this if needed)
+        cors.addMapping("/**")
+        .allowedOrigins("http://localhost:3000")
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowedHeaders("*")
+        .allowCredentials(true); 
+
         // call an internal helper method
         exposeIds(config);
     }
 
-    private static void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+    private static void disableHttpMethods(Class<?> theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
         config.getExposureConfiguration()
                 .forDomainType(theClass)
-                .withItemExposure((metdata,httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata,httpMethods) -> httpMethods.disable(theUnsupportedActions));
+                .withItemExposure((_,httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((_,httpMethods) -> httpMethods.disable(theUnsupportedActions));
     }
 
     private void exposeIds (RepositoryRestConfiguration config){
