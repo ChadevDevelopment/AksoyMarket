@@ -37,6 +37,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Country.class, config, theUnsupportedActions);
         disableHttpMethods(State.class, config, theUnsupportedActions);
 
+        // max bring 100 products
+        config.setDefaultPageSize(100);
+
         // Enable CORS for all origins (you can restrict this if needed)
         cors.addMapping("/**")
         .allowedOrigins("http://localhost:3000")
